@@ -180,7 +180,7 @@ def cube(x) {
     return x * x * x
 }
 
-def sqrt_custom(x) {
+def sqrt(x) {
     if x < 0 {
         print("Error: Cannot calculate square root of negative number")
         return null

@@ -22,7 +22,7 @@ Contributions are welcome! Please follow the guidelines below:
 To install Sponge Modules, you can use the Sponge package manager:
 
 ```bash
-sponge install module
+sponge install author.module
 ```
 
 ---
