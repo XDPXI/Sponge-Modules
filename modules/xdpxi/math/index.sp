@@ -30,32 +30,30 @@ def modulo(a, b) {
 }
 
 def sin(x) {
-    let x_mod = x % TAU
+    let tau = 6.283185307179586
+    let x_mod = x % tau
     let result = x_mod
     let term = x_mod
     let i = 1
-
     while i < 10 {
         term = term * (-1) * x_mod * x_mod / ((2 * i) * (2 * i + 1))
         result = result + term
         i = i + 1
     }
-
     return result
 }
 
 def cos(x) {
-    let x_mod = x % TAU
+    let tau = 6.283185307179586
+    let x_mod = x % tau
     let result = 1.0
     let term = 1.0
     let i = 1
-
     while i < 10 {
         term = term * (-1) * x_mod * x_mod / ((2 * i - 1) * (2 * i))
         result = result + term
         i = i + 1
     }
-
     return result
 }
 
@@ -77,7 +75,8 @@ def asin(x) {
 }
 
 def acos(x) {
-    return (PI / 2) - asin(x)
+    let pi = 3.141592653589793
+    return (pi / 2) - asin(x)
 }
 
 def atan(x) {
@@ -85,20 +84,21 @@ def atan(x) {
 }
 
 def atan2(y, x) {
+    let pi = 3.141592653589793
     if x > 0 {
         return atan(y / x)
     }
     if x < 0 and y >= 0 {
-        return atan(y / x) + PI
+        return atan(y / x) + pi
     }
     if x < 0 and y < 0 {
-        return atan(y / x) - PI
+        return atan(y / x) - pi
     }
     if x == 0 and y > 0 {
-        return PI / 2
+        return pi / 2
     }
     if x == 0 and y < 0 {
-        return -PI / 2
+        return -pi / 2
     }
     return 0
 }
@@ -125,13 +125,11 @@ def exp(x) {
     let result = 1.0
     let term = 1.0
     let i = 1
-
     while i < 20 {
         term = term * x / i
         result = result + term
         i = i + 1
     }
-
     return result
 }
 
@@ -140,19 +138,16 @@ def ln(x) {
         print("Error: ln domain is (0, infinity)")
         return null
     }
-
     let y = (x - 1) / (x + 1)
     let y2 = y * y
     let result = 0.0
     let term = y
     let i = 1
-
     while i < 20 {
         result = result + term / i
         term = term * y2
         i = i + 2
     }
-
     return 2 * result
 }
 
@@ -180,7 +175,7 @@ def cube(x) {
     return x * x * x
 }
 
-def sqrt(x) {
+def sqrt_custom(x) {
     if x < 0 {
         print("Error: Cannot calculate square root of negative number")
         return null
@@ -188,15 +183,12 @@ def sqrt(x) {
     if x == 0 {
         return 0
     }
-
     let guess = x / 2
     let i = 0
-
     while i < 10 {
         guess = (guess + x / guess) / 2
         i = i + 1
     }
-
     return guess
 }
 
@@ -206,15 +198,12 @@ def cbrt(x) {
         sign = -1
         x = -x
     }
-
     let guess = x / 3
     let i = 0
-
     while i < 10 {
         guess = (2 * guess + x / (guess * guess)) / 3
         i = i + 1
     }
-
     return sign * guess
 }
 
@@ -224,17 +213,14 @@ def nth_root(x, n) {
         return null
     }
     if n == 2 {
-        return sqrt(x)
+        return sqrt_custom(x)
     }
-
     let guess = x / n
     let i = 0
-
     while i < 15 {
         guess = ((n - 1) * guess + x / (guess ** (n - 1))) / n
         i = i + 1
     }
-
     return guess
 }
 
@@ -274,7 +260,6 @@ def factorial(n) {
     if n == 0 or n == 1 {
         return 1
     }
-
     let result = 1
     let i = 2
     while i <= n {
@@ -291,7 +276,6 @@ def combination(n, k) {
     if k == 0 or k == n {
         return 1
     }
-
     return factorial(n) / (factorial(k) * factorial(n - k))
 }
 
@@ -306,7 +290,6 @@ def mean(arr) {
     if len(arr) == 0 {
         return null
     }
-
     let sum = 0
     for val in arr {
         sum = sum + val
@@ -318,10 +301,8 @@ def median(arr) {
     if len(arr) == 0 {
         return null
     }
-
     let sorted = arr
     let n = len(sorted)
-
     if n % 2 == 1 {
         return sorted[n / 2]
     }
@@ -332,20 +313,21 @@ def variance(arr) {
     if len(arr) == 0 {
         return null
     }
-
     let m = mean(arr)
     let sum_sq = 0
-
     for val in arr {
         let diff = val - m
         sum_sq = sum_sq + diff * diff
     }
-
     return sum_sq / len(arr)
 }
 
 def std_dev(arr) {
-    return sqrt(variance(arr))
+    let var = variance(arr)
+    if var == null {
+        return null
+    }
+    return sqrt(var)
 }
 
 def sum_array(arr) {
@@ -367,7 +349,6 @@ def product_array(arr) {
 def gcd(a, b) {
     a = abs(a)
     b = abs(b)
-
     while b != 0 {
         let temp = b
         b = a % b
@@ -390,7 +371,6 @@ def is_prime(n) {
     if n % 2 == 0 {
         return false
     }
-
     let i = 3
     while i * i <= n {
         if n % i == 0 {
@@ -410,11 +390,13 @@ def is_odd(n) {
 }
 
 def deg_to_rad(degrees) {
-    return degrees * PI / 180
+    let pi = 3.141592653589793
+    return degrees * pi / 180
 }
 
 def rad_to_deg(radians) {
-    return radians * 180 / PI
+    let pi = 3.141592653589793
+    return radians * 180 / pi
 }
 
 def distance_2d(x1, y1, x2, y2) {
@@ -439,7 +421,6 @@ def dot_product(v1, v2) {
         print("Error: Vectors must have same length")
         return null
     }
-
     let result = 0
     let i = 0
     while i < len(v1) {
@@ -462,7 +443,6 @@ def normalize(v) {
     if mag == 0 {
         return v
     }
-
     let result = []
     for component in v {
         result = push(result, component / mag)
@@ -485,17 +465,14 @@ def fibonacci(n) {
     if n == 1 {
         return 1
     }
-
     let a = 0
     let b = 1
     let i = 2
-
     while i <= n {
         let temp = a + b
         a = b
         b = temp
         i = i + 1
     }
-
     return b
 }

@@ -1,5 +1,5 @@
 name: xdpxi.math
-version: 1.0.0
+version: 1.0.1
 description: An extensive set of mathematical functions and utilities.
 files:
   - index.sp
